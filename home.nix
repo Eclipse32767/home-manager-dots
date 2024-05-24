@@ -11,6 +11,7 @@
     librewolf
     kate
     kitty
+    blender
     alacritty
     _1password-gui
     webcord
@@ -131,6 +132,9 @@
               value = "spawn 'tag set-view-tags ${ws}'";
             })
             workspaces);
+      };
+      map-switch.normal = {
+        "lid close" = "spawn 'systemctl suspend'"
       };
       map-pointer = {
         normal = {
