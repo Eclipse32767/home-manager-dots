@@ -65,6 +65,8 @@
 
       homeconf = "nvim ~/Config/home-manager/home.nix";
       homeflake = "nvim ~/Config/home-manager/flake.nix";
+      homepull = "cd ~/Config/home-manager && git pull && cd -";
+      homepush = "cd ~/Config/home-manager && git push && cd -";
       homedeploy = "alejandra ~/Config/home-manager && home-manager switch";
     };
     history.size = 1000000;
@@ -134,7 +136,7 @@
             workspaces);
       };
       map-switch.normal = {
-        "lid close" = "spawn 'systemctl suspend'"
+        "lid close" = "spawn 'systemctl suspend'";
       };
       map-pointer = {
         normal = {
