@@ -113,6 +113,8 @@
             "Super O" = "send-to-output next";
             "Super Minus" = "send-layout-cmd rivertile 'main-ratio -0.05'";
             "Super Equal" = "send-layout-cmd rivertile 'main-ratio +0.05'";
+            "None XF86AudioRaiseVolume" = "spawn 'wpctl set-volume @DEFAULT_SINK@ 5%+'";
+            "None XF86AudioLowerVolume" = "spawn 'wpctl set-volume @DEFAULT_SINK@ 5%-'";
           }
           // builtins.listToAttrs (map (ws: {
               name = "Alt ${ws}";
