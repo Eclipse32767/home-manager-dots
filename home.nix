@@ -30,6 +30,7 @@
     wlr-randr
     grim
     slurp
+    zotero
     lxqt.qps
     wl-clipboard
     libresprite
