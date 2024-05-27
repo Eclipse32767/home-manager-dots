@@ -28,6 +28,7 @@
     nil
     prismlauncher
     wlr-randr
+    libinput-gestures
     grim
     slurp
     zotero
@@ -156,6 +157,7 @@
         "'wlr-randr --output DP-3 --pos 0,1080'"
         "'swayidle timeout 600 systemctl suspend'"
         "'sway-audio-idle-inhibit'"
+        "libinput-gestures"
       ];
       default-layout = "rivertile";
       focus-follows-cursor = "always";
