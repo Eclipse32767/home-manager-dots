@@ -168,7 +168,89 @@
   programs.waybar = {
     enable = true;
     systemd.enable = false;
-    systemd.target = "hyprland-session.target";
+    settings.mainBar = {
+      layer = "top";
+      position = "top";
+      height = 30;
+      spacing = 0;
+      margin-top = 0;
+      margin-bottom = 0;
+
+      modules-left = ["custom/launcher" "group/r-launcher" "group/l-workspaces" "river/tags" "group/r-workspaces" "group/l-taskbar" "wlr/taskbar" "group/r-taskbar"];
+      modules-center = ["group/l-clock" "clock" "group/r-clock"];
+      modules-right = ["group/l-devices" "group/devices" "group/r-devices" "group/l-monitor" "group/monitor" "group/r-monitor" "group/l-system" "group/system"];
+      "custom/launcher" = {
+        format = " ";
+        on-click = "rofi -show drun";
+      };
+      "river/tags" = {
+        num-tags = 5;
+        tag-labels = ["" "" "" "" ""];
+      };
+      "wlr/taskbar" = {
+        format = "{icon}";
+        icon-size = 20;
+        spacing = 5;
+      };
+      clock = {
+        tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+        format-alt = "{:%Y-%m-%d}";
+        format = "{:%H:%M:%S}";
+        interval = 1;
+      };
+      "group/devices" = {
+        orientation = "horizontal";
+        modules = ["pulseaudio" "backlight" "network"];
+      };
+      pulseaudio = {
+        format = "{volume}% {icon}";
+        format-muted = "";
+        format-icons = ["" "" ""];
+      };
+      backlight = {
+        format = "{percent}% {icon}";
+        format-icons = ["" "󰃠"];
+      };
+      network = {
+        format-wifi = "{signalStrength}%  ";
+      };
+      "group/monitor" = {
+        orientation = "horizontal";
+        modules = ["cpu" "memory" "temperature" "battery"];
+      };
+      cpu.format = "{usage}%  ";
+      memory.format = "{}%  ";
+      temperature = {
+        critical-threshold = 80;
+        format = "{temperatureC}°C {icon}";
+        format-icons = ["" "" ""];
+      };
+      battery = {
+        full-at = 65;
+        format = "{capacity}% {icon}  ";
+        format-charging = "{capacity}% {icon} 󱐌  ";
+        format-icons = ["" "" "" "" ""];
+      };
+      "group/system" = {
+        orientation = "horizontal";
+        modules = ["keyboard-state" "tray" "custom/power"];
+      };
+      keyboard-state = {
+        numlock = true;
+        capslock = true;
+        format = " {name} {icon}";
+        format-icons = {
+          locked = "";
+          unlocked = "";
+        };
+      };
+      tray.icon-size = 20;
+      tray.spacing = 5;
+      "custom/power" = {
+        format = "󰍃";
+        on-click = "wlogout";
+      };
+    };
   };
   programs.neovim = {
     enable = true;
