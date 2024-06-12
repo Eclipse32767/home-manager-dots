@@ -78,21 +78,45 @@
       ZSH_AUTOSUGGEST_STRATEGY=(history completion)
     '';
   };
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Catppuccin-Macchiato-Standard-Blue-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        variant = "macchiato";
-      };
-    };
+  #gtk = {
+  #  enable = true;
+  #  theme = {
+  #    name = "Catppuccin-Macchiato-Standard-Blue-Dark";
+  #    package = pkgs.catppuccin-gtk.override {
+  #      variant = "macchiato";
+  #    };
+  #  };
+  #};
+  stylix.enable = true;
+  stylix.image = ./wpaper.jpg;
+  stylix.base16Scheme = {
+    base00 = "24273a"; # base
+    base01 = "1e2030"; # mantle
+    base02 = "363a4f"; # surface0
+    base03 = "494d64"; # surface1
+    base04 = "5b6078"; # surface2
+    base05 = "cad3f5"; # text
+    base06 = "f4dbd6"; # rosewater
+    base07 = "b7bdf8"; # lavender
+    base08 = "ed8796"; # red
+    base09 = "f5a97f"; # peach
+    base0A = "eed49f"; # yellow
+    base0B = "a6da95"; # green
+    base0C = "8bd5ca"; # teal
+    base0D = "8aadf4"; # blue
+    base0E = "c6a0f6"; # mauve
+    base0F = "f0c6c6"; # flamingo
   };
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      window.opacity = 0.8;
-    };
-  };
+  stylix.targets.waybar.enable = false;
+  stylix.targets.vim.enable = false;
+  stylix.cursor.package = pkgs.kdePackages.breeze;
+  stylix.cursor.name = "breeze_cursors";
+  #programs.alacritty = {
+  #  enable = true;
+  #  settings = {
+  #    window.opacity = 0.8;
+  #  };
+  #};
   programs.home-manager.enable = true;
   wayland.windowManager.river = {
     enable = true;
