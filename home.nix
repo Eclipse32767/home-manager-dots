@@ -111,6 +111,16 @@
   stylix.targets.vim.enable = false;
   stylix.cursor.package = pkgs.kdePackages.breeze;
   stylix.cursor.name = "breeze_cursors";
+  stylix.fonts = let
+    allfonts = {
+      name = "JetBrainsMono Nerd Font";
+      package = pkgs.nerdfonts;
+    };
+  in {
+    monospace = allfonts;
+    sansSerif = allfonts;
+    serif = allfonts;
+  };
   #programs.alacritty = {
   #  enable = true;
   #  settings = {
