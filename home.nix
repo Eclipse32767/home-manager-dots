@@ -35,6 +35,7 @@
     lxqt.qps
     wl-clipboard
     libresprite
+    river-filtile
   ];
   programs.direnv = {
     enable = true;
@@ -44,16 +45,13 @@
   programs.zsh = {
     enable = true;
     initExtraBeforeCompInit = ''
-      # p10k instant prompt
-      local P10K_INSTANT_PROMPT="~/Cache/p10k-instant-prompt-''${(%):-%n}.zsh"
-      [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
+      eval "$(oh-my-posh init zsh)"
     '';
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     antidote.enable = true;
     antidote.plugins = [
-      "romkatv/powerlevel10k"
       "chisui/zsh-nix-shell"
     ];
     shellAliases = {
@@ -74,19 +72,69 @@
     history.size = 1000000;
     history.path = "/home/kit/Config/zsh/history";
     initExtra = ''
-      source ~/.p10k.zsh
       ZSH_AUTOSUGGEST_STRATEGY=(history completion)
     '';
   };
-  #gtk = {
-  #  enable = true;
-  #  theme = {
-  #    name = "Catppuccin-Macchiato-Standard-Blue-Dark";
-  #    package = pkgs.catppuccin-gtk.override {
-  #      variant = "macchiato";
-  #    };
-  #  };
-  #};
+  programs.oh-my-posh = {
+    enable = true;
+    enableZshIntegration = true;
+    settings = {
+      blocks = [
+        {
+          alignment = "right";
+          type = "rprompt";
+          segments = [
+            {
+              style = "diamond";
+              type = "os";
+              trailing_diamond = "";
+              leading_diamond = "";
+              template = "{{.Icon}} ";
+              background = "8";
+              foreground = "15";
+            }
+          ];
+        }
+        {
+          alignment = "left";
+          type = "prompt";
+          segments = [
+            {
+              style = "diamond";
+              trailing_diamond = "";
+              leading_diamond = "";
+              background = "8";
+              foreground = "15";
+              properties = {
+                folder_icon = " ";
+                folder_separator_icon = "  ";
+                max_depth = 1;
+                style = "agnoster_short";
+              };
+              template = "{{ .Path }}";
+              type = "path";
+            }
+            {
+              type = "git";
+              style = "powerline";
+              powerline_symbol = "";
+              background = "8";
+              foreground = "15";
+              template = "{{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}";
+              properties = {
+                fetch_status = true;
+                fetch_upstream_icon = true;
+              };
+            }
+          ];
+        }
+      ];
+      transient_prompt = {
+        foreground = "15";
+        template = " =>";
+      };
+    };
+  };
   stylix.enable = true;
   stylix.image = ./wpaper.jpg;
   stylix.base16Scheme = {
@@ -108,7 +156,20 @@
     base0F = "f0c6c6"; # flamingo
   };
   stylix.targets.waybar.enable = false;
-  stylix.targets.vim.enable = false;
+  stylix.targets.gtk.extraCss = ''
+        /* No (default) title bar on wayland */
+    headerbar.default-decoration {
+      /* You may need to tweak these values depending on your GTK theme */
+      margin-bottom: 50px;
+      margin-top: -100px;
+    }
+
+    /* rm -rf window shadows */
+    window.csd,             /* gtk4? */
+    window.csd decoration { /* gtk3 */
+      box-shadow: none;
+    }
+  '';
   stylix.cursor.package = pkgs.kdePackages.breeze;
   stylix.cursor.name = "breeze_cursors";
   stylix.fonts = let
@@ -121,12 +182,13 @@
     sansSerif = allfonts;
     serif = allfonts;
   };
-  #programs.alacritty = {
-  #  enable = true;
-  #  settings = {
-  #    window.opacity = 0.8;
-  #  };
-  #};
+  programs.alacritty.enable = true;
+  programs.kitty = {
+    enable = true;
+    settings = {
+      background_opacity = lib.mkForce "0.9";
+    };
+  };
   programs.home-manager.enable = true;
   wayland.windowManager.river = {
     enable = true;
