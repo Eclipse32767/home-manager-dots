@@ -93,6 +93,27 @@
               background = "8";
               foreground = "15";
             }
+            {
+              type = "executiontime";
+              style = "powerline";
+              powerline_symbol = "";
+              background = "8";
+              foreground = "15";
+              template = "{{ .FormattedMs }}";
+              properties = {
+                threshold = "0";
+                style = "austin";
+                always_enabled = true;
+              };
+            }
+            {
+              type = "rust";
+              style = "powerline";
+              powerline_symbol = "";
+              background = "8";
+              foreground = "15";
+              template = "{{ .Full }}";
+            }
           ];
         }
         {
@@ -130,8 +151,8 @@
         }
       ];
       transient_prompt = {
-        foreground = "15";
-        template = " =>";
+        foreground = "8";
+        template = "██";
       };
     };
   };
