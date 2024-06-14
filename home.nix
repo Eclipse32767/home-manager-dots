@@ -230,8 +230,8 @@
             "Super+Shift Space" = "toggle-float";
             "Super Tab" = "zoom";
             "Super O" = "send-to-output next";
-            "Super Minus" = "send-layout-cmd rivertile 'main-ratio -0.05'";
-            "Super Equal" = "send-layout-cmd rivertile 'main-ratio +0.05'";
+            "Super Minus" = "send-layout-cmd filtile 'main-ratio -0.05'";
+            "Super Equal" = "send-layout-cmd filtile 'main-ratio +0.05'";
             "None XF86AudioRaiseVolume" = "spawn 'wpctl set-volume @DEFAULT_SINK@ 5%+'";
             "None XF86AudioLowerVolume" = "spawn 'wpctl set-volume @DEFAULT_SINK@ 5%-'";
           }
@@ -268,7 +268,7 @@
       spawn = [
         "'swww init'"
         "waybar"
-        "rivertile"
+        "filtile"
         "'tag set-view-tags 1'"
         "'wlr-randr --output eDP-1 --pos 1920,0'"
         "'wlr-randr --output DP-3 --pos 0,1080'"
@@ -276,7 +276,7 @@
         "'sway-audio-idle-inhibit'"
         "libinput-gestures"
       ];
-      default-layout = "rivertile";
+      default-layout = "filtile";
       focus-follows-cursor = "always";
       border-width = 5;
       border-color-focused = "0x8AADF4";
@@ -293,9 +293,9 @@
       margin-top = 0;
       margin-bottom = 0;
 
-      modules-left = ["custom/launcher" "group/r-launcher" "group/l-workspaces" "river/tags" "group/r-workspaces" "group/l-taskbar" "wlr/taskbar" "group/r-taskbar"];
-      modules-center = ["group/l-clock" "clock" "group/r-clock"];
-      modules-right = ["group/l-devices" "group/devices" "group/r-devices" "group/l-monitor" "group/monitor" "group/r-monitor" "group/l-system" "group/system"];
+      modules-left = ["custom/launcher" "river/tags" "wlr/taskbar"];
+      modules-center = ["clock"];
+      modules-right = ["group/devices" "group/monitor" "group/system"];
       "custom/launcher" = {
         format = " ";
         on-click = "rofi -show drun";
