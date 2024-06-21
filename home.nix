@@ -36,6 +36,7 @@
     wl-clipboard
     libresprite
     river-filtile
+    gnome.nautilus
   ];
   programs.direnv = {
     enable = true;
@@ -223,7 +224,7 @@
           {
             "Super Return" = "spawn kitty";
             "Super Q" = "close";
-            "Super F" = "spawn thunar";
+            "Super F" = "spawn 'nautilus -w'";
             "Super W" = "spawn librewolf";
             "Super+Shift E" = "spawn wlogout";
             "Super Space" = "spawn 'rofi -show drun'";
