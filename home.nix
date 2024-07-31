@@ -36,7 +36,9 @@
     wl-clipboard
     libresprite
     river-filtile
-    gnome.nautilus
+    nautilus
+    zed-editor
+    jetbrains.rust-rover
   ];
   programs.direnv = {
     enable = true;
@@ -160,22 +162,22 @@
   stylix.enable = true;
   stylix.image = ./wpaper.jpg;
   stylix.base16Scheme = {
-    base00 = "24273a"; # base
-    base01 = "1e2030"; # mantle
-    base02 = "363a4f"; # surface0
-    base03 = "494d64"; # surface1
-    base04 = "5b6078"; # surface2
-    base05 = "cad3f5"; # text
-    base06 = "f4dbd6"; # rosewater
-    base07 = "b7bdf8"; # lavender
-    base08 = "ed8796"; # red
-    base09 = "f5a97f"; # peach
-    base0A = "eed49f"; # yellow
-    base0B = "a6da95"; # green
-    base0C = "8bd5ca"; # teal
-    base0D = "8aadf4"; # blue
-    base0E = "c6a0f6"; # mauve
-    base0F = "f0c6c6"; # flamingo
+    base00 = "24283B";
+    base01 = "16161E";
+    base02 = "343A52";
+    base03 = "444B6A";
+    base04 = "787C99";
+    base05 = "A9B1D6";
+    base06 = "CBCCD1";
+    base07 = "D5D6DB";
+    base08 = "C0CAF5";
+    base09 = "A9B1D6";
+    base0A = "0DB9D7";
+    base0B = "9ECE6A";
+    base0C = "B4F9F8";
+    base0D = "2AC3DE";
+    base0E = "BB9AF7";
+    base0F = "F7768E";
   };
   stylix.targets.waybar.enable = false;
   stylix.targets.gtk.extraCss = ''

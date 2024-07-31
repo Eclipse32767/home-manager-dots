@@ -23,7 +23,7 @@
         overlays = [
           (final: prev: {
             xwayland = oldpkgs.legacyPackages."x86_64-linux".xwayland;
-            waybar = oldpkgs.legacyPackages."x86_64-linux".waybar;
+            waybar = nixpkgs.legacyPackages."x86_64-linux".waybar.override {hyprlandSupport = false;};
           })
         ];
       };
