@@ -38,6 +38,8 @@
     river-filtile
     nautilus
     zed-editor
+    ghc
+    mdbook
     jetbrains.rust-rover
   ];
   programs.direnv = {
