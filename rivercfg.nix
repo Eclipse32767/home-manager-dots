@@ -164,10 +164,12 @@ in {
         };
         "group/monitor" = {
           orientation = "horizontal";
-          modules = ["cpu" "memory" "temperature" "battery"];
+          drawer = {
+          };
+          modules = ["custom/infodrawer" "cpu" "memory" "temperature" "battery"];
         };
-        cpu.format = "{usage}%  ";
-        memory.format = "{}%  ";
+        cpu.format = "{usage}% ";
+        memory.format = "{}% ";
         temperature = {
           critical-threshold = 80;
           format = "{temperatureC}°C {icon}";
@@ -178,9 +180,19 @@ in {
           format-charging = "{capacity}% {icon} 󱐌  ";
           format-icons = ["" "" "" "" ""];
         };
+        "custom/infodrawer" = {
+          format = "󰮫";
+        };
         "group/system" = {
           orientation = "horizontal";
-          modules = ["keyboard-state" "tray" "custom/power"];
+          modules = ["keyboard-state" "group/systray" "custom/power"];
+        };
+        "group/systray" = {
+          orientation = "horizontal";
+          drawer = {
+            transition-left-to-right = false;
+          };
+          modules = ["custom/trayopen" "tray"];
         };
         keyboard-state = {
           numlock = true;
@@ -193,6 +205,9 @@ in {
         };
         tray.icon-size = 20;
         tray.spacing = 5;
+        "custom/trayopen" = {
+          format = "󱊖";
+        };
         "custom/power" = {
           format = "󰍃";
           on-click = "wlogout";
@@ -200,185 +215,193 @@ in {
       };
       style =
         mapNullable (theme: ''
-           * {
-               border: none;
-               border-radius: 0px;
-               font-family: "JetBrainsMono Nerd Font";
-               font-size: 13px;
-               min-height: 0;
-           }
-           @define-color base0 #${theme.base00};
-           @define-color base1 #${theme.base01};
-           @define-color base2 #${theme.base02};
-           @define-color base3 #${theme.base03};
-           @define-color base4 #${theme.base04};
-           @define-color base5 #${theme.base05};
-           @define-color base6 #${theme.base06};
-           @define-color base7 #${theme.base07};
-           @define-color base8 #${theme.base08};
-           @define-color base9 #${theme.base09};
-           @define-color baseA #${theme.base0A};
-           @define-color baseB #${theme.base0B};
-           @define-color baseC #${theme.base0C};
-           @define-color baseD #${theme.base0D};
-           @define-color baseE #${theme.base0E};
-           @define-color baseF #${theme.base0F};
+                        * {
+                            border: none;
+                            border-radius: 0px;
+                            font-family: "JetBrainsMono Nerd Font";
+                            font-size: 13px;
+                            min-height: 0;
+                        }
+                        @define-color base0 #${theme.base00};
+                        @define-color base1 #${theme.base01};
+                        @define-color base2 #${theme.base02};
+                        @define-color base3 #${theme.base03};
+                        @define-color base4 #${theme.base04};
+                        @define-color base5 #${theme.base05};
+                        @define-color base6 #${theme.base06};
+                        @define-color base7 #${theme.base07};
+                        @define-color base8 #${theme.base08};
+                        @define-color base9 #${theme.base09};
+                        @define-color baseA #${theme.base0A};
+                        @define-color baseB #${theme.base0B};
+                        @define-color baseC #${theme.base0C};
+                        @define-color baseD #${theme.base0D};
+                        @define-color baseE #${theme.base0E};
+                        @define-color baseF #${theme.base0F};
 
-           @define-color text @base6;
-           @define-color accent @baseC;
+                        @define-color text @base6;
+                        @define-color accent @baseC;
 
-           window#waybar {
-               background-color: @base0;
-               color: @text;
-               transition-property: background-color;
-               transition-duration: .5s;
-           }
+                        window#waybar {
+                            background-color: @base0;
+                            color: @text;
+                            transition-property: background-color;
+                            transition-duration: .5s;
+                        }
 
-           window#waybar.hidden {
-               opacity: 0.2;
-           }
-           #custom-launcher {
-               background-color: transparent;
-               color: @text;
-               font-size: 20px;
-           }
+                        window#waybar.hidden {
+                            opacity: 0.2;
+                        }
+                        #custom-launcher {
+                            background-color: transparent;
+                            color: @text;
+                            font-size: 20px;
+                        }
 
-           #tags {
-               background: transparent;
-           }
-           #tags button {
-               background: @base2;
-               color: #ffffff;
-               border-radius: 20px;
-               padding: 5px;
-               margin-left: 2px;
-               margin-right: 2px;
-               transition-property: all;
-          transition-duration: 0.2s;
-           }
-           #tags button.occupied {
-               background: @accent;
-           }
-           #tags button.focused {
-               padding-left: 15px;
-               padding-right: 15px;
-           }
+                        #tags {
+                            background: transparent;
+                        }
+                        #tags button {
+                            background: @base2;
+                            color: #ffffff;
+                            border-radius: 20px;
+                            padding: 5px;
+                            margin-left: 2px;
+                            margin-right: 2px;
+                            transition-property: all;
+                       transition-duration: 0.2s;
+                        }
+                        #tags button.occupied {
+                            background: @accent;
+                        }
+                        #tags button.focused {
+                            padding-left: 15px;
+                            padding-right: 15px;
+                        }
 
-           #taskbar {
-               background-color: transparent;
-           }
+                        #taskbar {
+                            background-color: transparent;
+                        }
 
-           #window {
-               background-color: transparent;
-               font-size: 15px;
-           }
+                        #window {
+                            background-color: transparent;
+                            font-size: 15px;
+                        }
 
-           #temperature,
-           #network,
-           #pulseaudio,
-           #custom-launcher,
-           #custom-power,
-           #tray,
-           #idle_inhibitor {
-               padding-left: 10px;
-               padding-right: 10px;
-               color: @text;
-           }
+                        #temperature,
+                        #network,
+                        #pulseaudio,
+                        #custom-launcher,
+                        #custom-power,
+                 #custom-trayopen,
+                 #custom-infodrawer,
+                        #tray,
+                        #idle_inhibitor {
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            color: @text;
+                        }
+                 #custom-trayopen, #custom-infodrawer {
+                   font-size: 20px;
+                 }
 
-           #clock {
-               color: @text;
-               background-color: transparent;
-           }
+                        #clock {
+                            color: @text;
+                            background-color: transparent;
+                        }
 
-           label:focus {
-               background-color: #000000;
-           }
+                        label:focus {
+                            background-color: #000000;
+                        }
 
-           #devices {
-               background-color: transparent;
-               color: @text;
-           }
+                        #devices {
+                            background-color: transparent;
+                            color: @text;
+                        }
 
-           #pulseaudio {
-               color: @text;
-               padding: 0px 5px;
-           }
+                        #pulseaudio {
+                            color: @text;
+                            padding: 0px 5px;
+                        }
 
-           #pulseaudio.muted {
-               color: @text;
-           }
+                        #pulseaudio.muted {
+                            color: @text;
+                        }
 
-           #backlight {
-               color: @text;
-               padding: 0px 5px;
-           }
+                        #backlight {
+                            color: @text;
+                            padding: 0px 5px;
+                        }
+          #backlight-slider trough {
+             min-width: 100px;
+          }
 
-           #network {
-               color: @text;
-               padding: 0px 5px;
-           }
+                        #network {
+                            color: @text;
+                            padding: 0px 5px;
+                        }
 
-           #network.disconnected {
-               color: red;
-           }
+                        #network.disconnected {
+                            color: red;
+                        }
 
-           #monitor {
-               background-color: transparent;
-               color: @text;
-           }
+                        #monitor {
+                            background-color: transparent;
+                            color: @text;
+                        }
 
-           #cpu {
-               padding: 0px 5px;
-           }
+                        #cpu {
+                            padding: 0px 5px;
+                        }
 
-           #memory {
-               padding: 0px 5px;
-           }
+                        #memory {
+                            padding: 0px 5px;
+                        }
 
-           #temperature {
-               color: @text;
-               padding: 0px 5px;
-           }
+                        #temperature {
+                            color: @text;
+                            padding: 0px 5px;
+                        }
 
-           #temperature.critical {
-               background-color: #eb4d4b;
-           }
+                        #temperature.critical {
+                            background-color: #eb4d4b;
+                        }
 
-           #system {
-               background-color: transparent;
-               color: @text;
-           }
+                        #system {
+                            background-color: transparent;
+                            color: @text;
+                        }
 
-           #keyboard-state {
-               min-width: 16px;
-           }
+                        #keyboard-state {
+                            min-width: 16px;
+                        }
 
-           #keyboard-state > label {
-               padding: 0px 5px;
-           }
+                        #keyboard-state > label {
+                            padding: 0px 5px;
+                        }
 
-           #keyboard-state > label.locked {
-               background: rgba(0, 0, 0, 0.2);
-           }
+                        #keyboard-state > label.locked {
+                            background: rgba(0, 0, 0, 0.2);
+                        }
 
-           #tray {
-               color: black;
-           }
+                        #tray {
+                            color: black;
+                        }
 
-           #tray > .passive {
-               -gtk-icon-effect: dim;
-               color: black;
-           }
+                        #tray > .passive {
+                            -gtk-icon-effect: dim;
+                            color: black;
+                        }
 
-           #tray > .needs-attention {
-               -gtk-icon-effect: highlight;
-               color: black;
-           }
+                        #tray > .needs-attention {
+                            -gtk-icon-effect: highlight;
+                            color: black;
+                        }
 
-           #custom-power{
-               font-size: 16px;
-               color: @text;
-           }
+                        #custom-power{
+                            font-size: 16px;
+                            color: @text;
+                        }
         '')
         cfg.colors;
     };
