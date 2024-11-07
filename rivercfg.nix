@@ -24,6 +24,7 @@ in {
       alacritty
       kdePackages.dolphin
       wlogout
+      wofi
       swayidle
       sway-audio-idle-inhibit
       libnotify
@@ -31,6 +32,7 @@ in {
       grim
       slurp
       lxqt.qps
+      libinput-gestures
       wl-clipboard
       river-filtile
       nautilus
@@ -44,6 +46,7 @@ in {
     };
     wayland.windowManager.river = {
       enable = true;
+      package = null;
       xwayland.enable = true;
       systemd.enable = true;
       settings = {

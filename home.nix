@@ -3,27 +3,14 @@
   lib,
   ...
 }: let
-  colors = {
-    base00 = "24283B";
-    base01 = "16161E";
-    base02 = "343A52";
-    base03 = "444B6A";
-    base04 = "787C99";
-    base05 = "A9B1D6";
-    base06 = "CBCCD1";
-    base07 = "D5D6DB";
-    base08 = "C0CAF5";
-    base09 = "A9B1D6";
-    base0A = "0DB9D7";
-    base0B = "9ECE6A";
-    base0C = "B4F9F8";
-    base0D = "2AC3DE";
-    base0E = "BB9AF7";
-    base0F = "F7768E";
-  };
+  colors = builtins.fromJSON (builtins.readFile ./theme.json);
 in {
   home.username = "kit";
   home.homeDirectory = "/home/kit";
+  home.packages = with pkgs; [
+    ncurses
+    ncurses.dev
+  ];
   nixpkgs.config.allowUnfree = true;
   imports = [
     ./zsh.nix
@@ -36,8 +23,12 @@ in {
   workapps.enable = true;
   playapps.enable = true;
   devtools.enable = true;
+  devtools.cpp.enable = true;
+  devtools.rust.enable = true;
+  devtools.haskell.enable = true;
+  devtools.zig.enable = true;
   socials.discord.enable = true;
-  socials.discord.client = pkgs.webcord;
+  socials.discord.client = pkgs.vesktop;
   socials.mastodon.enable = true;
   rivercfg.enable = true;
   rivercfg.colors = colors;
