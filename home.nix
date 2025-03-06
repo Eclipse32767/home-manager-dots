@@ -55,7 +55,7 @@ in {
   stylix.fonts = let
     allfonts = {
       name = "JetBrainsMono Nerd Font";
-      package = pkgs.nerdfonts;
+      package = pkgs.nerd-fonts.jetbrains-mono;
     };
   in {
     monospace = allfonts;

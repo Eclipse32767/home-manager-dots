@@ -44,6 +44,9 @@ in {
         background_opacity = lib.mkForce "0.9";
       };
     };
+    programs.ghostty = {
+      enable = true;
+    };
     wayland.windowManager.river = {
       enable = true;
       package = null;
@@ -113,7 +116,7 @@ in {
         default-layout = "filtile";
         focus-follows-cursor = "always";
         border-width = 5;
-        border-color-focused = "0x8AADF4";
+        border-color-focused = lib.mkForce "0x8AADF4";
       };
     };
     programs.waybar = {
@@ -121,8 +124,9 @@ in {
       systemd.enable = false;
       settings.mainBar = {
         layer = "top";
-        position = "top";
-        height = 30;
+        position = "left";
+        #height = 30;
+        width = 30;
         spacing = 0;
         margin-top = 0;
         margin-bottom = 0;
@@ -144,13 +148,13 @@ in {
           spacing = 5;
         };
         clock = {
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          tooltip-format = "{:%H:%M:%S}";
           format-alt = "{:%Y-%m-%d}";
-          format = "{:%H:%M:%S}";
+          format = "{:%H:%M}";
           interval = 1;
         };
         "group/devices" = {
-          orientation = "horizontal";
+          orientation = "inherit";
           modules = ["pulseaudio" "backlight" "network"];
         };
         pulseaudio = {
@@ -166,7 +170,7 @@ in {
           format-wifi = "{signalStrength}%  ";
         };
         "group/monitor" = {
-          orientation = "horizontal";
+          orientation = "inherit";
           drawer = {
           };
           modules = ["custom/infodrawer" "cpu" "memory" "temperature" "battery"];
@@ -179,19 +183,19 @@ in {
           format-icons = ["" "" ""];
         };
         battery = {
-          format = "{capacity}% {icon}  ";
-          format-charging = "{capacity}% {icon} 󱐌  ";
+          format = "{capacity}% {icon}";
+          format-charging = "{capacity}% {icon} 🗲";
           format-icons = ["" "" "" "" ""];
         };
         "custom/infodrawer" = {
           format = "󰮫";
         };
         "group/system" = {
-          orientation = "horizontal";
+          orientation = "inherit";
           modules = ["keyboard-state" "group/systray" "custom/power"];
         };
         "group/systray" = {
-          orientation = "horizontal";
+          orientation = "inherit";
           drawer = {
             transition-left-to-right = false;
           };
@@ -200,7 +204,7 @@ in {
         keyboard-state = {
           numlock = true;
           capslock = true;
-          format = " {name} {icon}";
+          format = " {name}";
           format-icons = {
             locked = "";
             unlocked = "";
@@ -218,193 +222,195 @@ in {
       };
       style =
         mapNullable (theme: ''
-                        * {
-                            border: none;
-                            border-radius: 0px;
-                            font-family: "JetBrainsMono Nerd Font";
-                            font-size: 13px;
-                            min-height: 0;
-                        }
-                        @define-color base0 #${theme.base00};
-                        @define-color base1 #${theme.base01};
-                        @define-color base2 #${theme.base02};
-                        @define-color base3 #${theme.base03};
-                        @define-color base4 #${theme.base04};
-                        @define-color base5 #${theme.base05};
-                        @define-color base6 #${theme.base06};
-                        @define-color base7 #${theme.base07};
-                        @define-color base8 #${theme.base08};
-                        @define-color base9 #${theme.base09};
-                        @define-color baseA #${theme.base0A};
-                        @define-color baseB #${theme.base0B};
-                        @define-color baseC #${theme.base0C};
-                        @define-color baseD #${theme.base0D};
-                        @define-color baseE #${theme.base0E};
-                        @define-color baseF #${theme.base0F};
+                           * {
+                               border: none;
+                               border-radius: 0px;
+                               font-family: "JetBrainsMono Nerd Font";
+                               font-size: 13px;
+                               min-height: 0;
+                           }
+                           @define-color base0 #${theme.base00};
+                           @define-color base1 #${theme.base01};
+                           @define-color base2 #${theme.base02};
+                           @define-color base3 #${theme.base03};
+                           @define-color base4 #${theme.base04};
+                           @define-color base5 #${theme.base05};
+                           @define-color base6 #${theme.base06};
+                           @define-color base7 #${theme.base07};
+                           @define-color base8 #${theme.base08};
+                           @define-color base9 #${theme.base09};
+                           @define-color baseA #${theme.base0A};
+                           @define-color baseB #${theme.base0B};
+                           @define-color baseC #${theme.base0C};
+                           @define-color baseD #${theme.base0D};
+                           @define-color baseE #${theme.base0E};
+                           @define-color baseF #${theme.base0F};
 
-                        @define-color text @base6;
-                        @define-color accent @baseC;
+                           @define-color text @base6;
+                           @define-color accent @baseC;
 
-                        window#waybar {
-                            background-color: @base0;
-                            color: @text;
-                            transition-property: background-color;
-                            transition-duration: .5s;
-                        }
+                           window#waybar {
+                               background-color: @base0;
+                               color: @text;
+                               transition-property: background-color;
+                               transition-duration: .5s;
+                           }
 
-                        window#waybar.hidden {
-                            opacity: 0.2;
-                        }
-                        #custom-launcher {
-                            background-color: transparent;
-                            color: @text;
-                            font-size: 20px;
-                        }
+                           window#waybar.hidden {
+                               opacity: 0.2;
+                           }
+                           #custom-launcher {
+                               background-color: transparent;
+                               color: @text;
+                               font-size: 20px;
+                           }
 
-                        #tags {
-                            background: transparent;
-                        }
-                        #tags button {
-                            background: @base2;
-                            color: #ffffff;
-                            border-radius: 20px;
-                            padding: 5px;
-                            margin-left: 2px;
-                            margin-right: 2px;
-                            transition-property: all;
-                       transition-duration: 0.2s;
-                        }
-                        #tags button.occupied {
-                            background: @accent;
-                        }
-                        #tags button.focused {
-                            padding-left: 15px;
-                            padding-right: 15px;
-                        }
+                           #tags {
+                               background: transparent;
+                           }
+                           #tags button {
+                               background: @base2;
+                               color: #ffffff;
+                               border-radius: 20px;
+                               padding: 5px;
+          margin-left: 10px;
+          margin-right: 10px;
+                               margin-top: 2px;
+                               margin-bottom: 2px;
+                               transition-property: all;
+                          transition-duration: 0.2s;
+                           }
+                           #tags button.occupied {
+                               background: @accent;
+                           }
+                           #tags button.focused {
+                               padding-top: 15px;
+                               padding-bottom: 15px;
+                           }
 
-                        #taskbar {
-                            background-color: transparent;
-                        }
+                           #taskbar {
+                               background-color: transparent;
+                           }
 
-                        #window {
-                            background-color: transparent;
-                            font-size: 15px;
-                        }
+                           #window {
+                               background-color: transparent;
+                               font-size: 15px;
+                           }
 
-                        #temperature,
-                        #network,
-                        #pulseaudio,
-                        #custom-launcher,
-                        #custom-power,
-                 #custom-trayopen,
-                 #custom-infodrawer,
-                        #tray,
-                        #idle_inhibitor {
-                            padding-left: 10px;
-                            padding-right: 10px;
-                            color: @text;
-                        }
-                 #custom-trayopen, #custom-infodrawer {
-                   font-size: 20px;
-                 }
+                           #temperature,
+                           #network,
+                           #pulseaudio,
+                           #custom-launcher,
+                           #custom-power,
+                    #custom-trayopen,
+                    #custom-infodrawer,
+                           #tray,
+                           #idle_inhibitor {
+                               padding-left: 10px;
+                               padding-right: 10px;
+                               color: @text;
+                           }
+                    #custom-trayopen, #custom-infodrawer {
+                      font-size: 20px;
+                    }
 
-                        #clock {
-                            color: @text;
-                            background-color: transparent;
-                        }
+                           #clock {
+                               color: @text;
+                               background-color: transparent;
+                           }
 
-                        label:focus {
-                            background-color: #000000;
-                        }
+                           label:focus {
+                               background-color: #000000;
+                           }
 
-                        #devices {
-                            background-color: transparent;
-                            color: @text;
-                        }
+                           #devices {
+                               background-color: transparent;
+                               color: @text;
+                           }
 
-                        #pulseaudio {
-                            color: @text;
-                            padding: 0px 5px;
-                        }
+                           #pulseaudio {
+                               color: @text;
+                               padding: 0px 5px;
+                           }
 
-                        #pulseaudio.muted {
-                            color: @text;
-                        }
+                           #pulseaudio.muted {
+                               color: @text;
+                           }
 
-                        #backlight {
-                            color: @text;
-                            padding: 0px 5px;
-                        }
-          #backlight-slider trough {
-             min-width: 100px;
-          }
+                           #backlight {
+                               color: @text;
+                               padding: 0px 5px;
+                           }
+             #backlight-slider trough {
+                min-width: 100px;
+             }
 
-                        #network {
-                            color: @text;
-                            padding: 0px 5px;
-                        }
+                           #network {
+                               color: @text;
+                               padding: 0px 5px;
+                           }
 
-                        #network.disconnected {
-                            color: red;
-                        }
+                           #network.disconnected {
+                               color: red;
+                           }
 
-                        #monitor {
-                            background-color: transparent;
-                            color: @text;
-                        }
+                           #monitor {
+                               background-color: transparent;
+                               color: @text;
+                           }
 
-                        #cpu {
-                            padding: 0px 5px;
-                        }
+                           #cpu {
+                               padding: 0px 5px;
+                           }
 
-                        #memory {
-                            padding: 0px 5px;
-                        }
+                           #memory {
+                               padding: 0px 5px;
+                           }
 
-                        #temperature {
-                            color: @text;
-                            padding: 0px 5px;
-                        }
+                           #temperature {
+                               color: @text;
+                               padding: 0px 5px;
+                           }
 
-                        #temperature.critical {
-                            background-color: #eb4d4b;
-                        }
+                           #temperature.critical {
+                               background-color: #eb4d4b;
+                           }
 
-                        #system {
-                            background-color: transparent;
-                            color: @text;
-                        }
+                           #system {
+                               background-color: transparent;
+                               color: @text;
+                           }
 
-                        #keyboard-state {
-                            min-width: 16px;
-                        }
+                           #keyboard-state {
+                               min-width: 16px;
+                           }
 
-                        #keyboard-state > label {
-                            padding: 0px 5px;
-                        }
+                           #keyboard-state > label {
+                               padding: 0px 5px;
+                           }
 
-                        #keyboard-state > label.locked {
-                            background: rgba(0, 0, 0, 0.2);
-                        }
+                           #keyboard-state > label.locked {
+                               background: rgba(0, 0, 0, 0.2);
+                           }
 
-                        #tray {
-                            color: black;
-                        }
+                           #tray {
+                               color: black;
+                           }
 
-                        #tray > .passive {
-                            -gtk-icon-effect: dim;
-                            color: black;
-                        }
+                           #tray > .passive {
+                               -gtk-icon-effect: dim;
+                               color: black;
+                           }
 
-                        #tray > .needs-attention {
-                            -gtk-icon-effect: highlight;
-                            color: black;
-                        }
+                           #tray > .needs-attention {
+                               -gtk-icon-effect: highlight;
+                               color: black;
+                           }
 
-                        #custom-power{
-                            font-size: 16px;
-                            color: @text;
-                        }
+                           #custom-power{
+                               font-size: 16px;
+                               color: @text;
+                           }
         '')
         cfg.colors;
     };

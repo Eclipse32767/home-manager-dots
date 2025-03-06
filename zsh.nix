@@ -15,8 +15,16 @@
   };
   programs.zsh = {
     enable = true;
+    #zprof.enable = true;
     initExtraBeforeCompInit = ''
       eval "$(oh-my-posh init zsh)"
+    '';
+    completionInit = ''
+         	autoload -Uz compinit
+         	if [ "$(find ~/.zcompdump -mtime 1)" ] ; then
+         		compinit
+      fi
+      compinit -C
     '';
     enableCompletion = true;
     autosuggestion.enable = true;
