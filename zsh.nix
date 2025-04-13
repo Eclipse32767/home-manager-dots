@@ -45,6 +45,7 @@
       homepull = "cd ~/Config/home-manager && git pull && cd -";
       homepush = "cd ~/Config/home-manager && git push && cd -";
       homedeploy = "alejandra ~/Config/home-manager && home-manager switch";
+      "c++" = "clang++ -fsanitize=address -fsanitize=float-divide-by-zero -fsanitize=float-cast-overflow -fsanitize=integer -fsanitize=undefined -fstack-protector-all -fsanitize=bounds -Werror -Wall -Wextra -Wpedantic -Wconversion -Wimplicit-fallthrough -Wunreachable-code-aggressive -Wpointer-arith";
     };
     history.size = 1000000;
     history.path = "/home/kit/Config/zsh/history";

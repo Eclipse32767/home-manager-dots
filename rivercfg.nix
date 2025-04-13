@@ -20,6 +20,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       librewolf
+      floorp
       kitty
       alacritty
       kdePackages.dolphin
@@ -61,7 +62,7 @@ in {
               "Super Return" = "spawn kitty";
               "Super Q" = "close";
               "Super F" = "spawn 'nautilus -w'";
-              "Super W" = "spawn librewolf";
+              "Super W" = "spawn floorp";
               "Super+Shift E" = "spawn wlogout";
               "Super Space" = "spawn 'rofi -show drun'";
               "Super+Shift Space" = "toggle-float";
